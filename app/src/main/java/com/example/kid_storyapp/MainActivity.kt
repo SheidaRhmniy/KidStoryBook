@@ -1,0 +1,52 @@
+package com.example.kid_storyapp
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_main)
+
+        val data = Constants.getStoryList()
+        setAdapterRecyclerView(data)
+
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+    }
+
+    private fun setAdapterRecyclerView(data:ArrayList<Story>)
+    {
+        val recyclerView = findViewById<RecyclerView>(R.id.rvStoryList)
+        recyclerView.layoutManager = LinearLayoutManager(this  )
+        val adapter = StoryAdapter(data)
+        recyclerView.adapter = adapter
+        println("before click")
+
+        //open story activity when clicked + sending the position of story
+        adapter.setOnClickListener(object : StoryAdapter.OnClickListener{
+            override fun onClick(position: Int) {
+                println("clicked")
+                val intent = Intent(this@MainActivity,StoryActivity::class.java)
+                println("Intent")
+                intent.putExtra("position", position)
+                startActivity(intent)
+                println("after start")
+
+            }
+
+        })
+    }
+}
