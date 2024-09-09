@@ -5,6 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="statusBarBackground">@color/blue2</item>
         <item name="android:statusBarColor">@color/blue2</item>
+        <item name="android:windowBackground">@drawable/bg</item>
     </style>
 
     <style name="Theme.KidStoryApp" parent="Base.Theme.KidStoryApp" />

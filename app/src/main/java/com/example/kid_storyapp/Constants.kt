@@ -7,39 +7,25 @@ object Constants {
 
         val story1 = Story(
             R.string.title1,
-            R.string.story1,
-            R.string.moral1,
-            R.drawable.rv_image1,
-            R.drawable.image1
+            listOf(R.drawable.b1, R.drawable.b2, R.drawable.b3), // List of images
+            listOf(R.raw.audio1, R.raw.audio2)
         )
         storyList.add(story1)
 
         val story2 = Story(
             R.string.title2,
-            R.string.story2,
-            R.string.moral2,
-            R.drawable.rv_image2,
-            R.drawable.image2
+            listOf(R.drawable.s1, R.drawable.s2, R.drawable.s3, R.drawable.yy), // Different number of images
+            listOf(R.raw.audio1, R.raw.audio2)
         )
         storyList.add(story2)
 
         val story3 = Story(
             R.string.title3,
-            R.string.story3,
-            R.string.moral3,
-            R.drawable.rv_image3,
-            R.drawable.image3
+            listOf(R.drawable.s4, R.drawable.s3pic2, R.drawable.s3pic3), // 3 images
+            listOf(R.raw.audio1, R.raw.audio2)
         )
         storyList.add(story3)
 
-        val story4 = Story(
-            R.string.title4,
-            R.string.story4,
-            R.string.moral4,
-            R.drawable.rv_image4,
-            R.drawable.image4
-        )
-        storyList.add(story4)
 
 
         return storyList

@@ -30,7 +30,7 @@ class StoryAdapter (private val dataSet:ArrayList<Story>):
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvTitle.setText(dataSet[position].title)
-        holder.image.setImageResource(dataSet[position].image)
+        holder.image.setImageResource(dataSet[position].images[0])
 
         //sending position of specific story that has been clicked
         holder.itemView.setOnClickListener{

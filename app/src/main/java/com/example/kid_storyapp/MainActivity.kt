@@ -33,17 +33,14 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this  )
         val adapter = StoryAdapter(data)
         recyclerView.adapter = adapter
-        println("before click")
 
         //open story activity when clicked + sending the position of story
         adapter.setOnClickListener(object : StoryAdapter.OnClickListener{
             override fun onClick(position: Int) {
-                println("clicked")
                 val intent = Intent(this@MainActivity,StoryActivity::class.java)
-                println("Intent")
                 intent.putExtra("position", position)
                 startActivity(intent)
-                println("after start")
+                println("position is:"+ position)
 
             }
 

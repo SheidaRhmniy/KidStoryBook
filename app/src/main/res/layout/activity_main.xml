@@ -14,10 +14,10 @@
         android:layout_height="60dp"
         android:background="@color/blue2"
         android:gravity="center"
-        android:text="ُStory Book"
+        android:text="پندآموز"
         android:textColor="#455A64"
         android:textSize="36sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/lalezar"
         app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintStart_toStartOf="parent"
