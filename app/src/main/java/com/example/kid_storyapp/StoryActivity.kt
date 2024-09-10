@@ -74,9 +74,10 @@ class StoryActivity : AppCompatActivity() {
         val story = storyList[position]
         // Set the appropriate image based on the current imagePosition
         binding?.storyImage?.setImageResource(story.images[imagePosition])
+        binding?.tvStoryTitle?.setText(story.title)
 
 
-         // Stop any currently playing audio
+        // Stop any currently playing audio
         mediaPlayer?.release()
         mediaPlayer = MediaPlayer.create(this, story.audios[imagePosition])
 

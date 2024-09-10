@@ -8,5 +8,10 @@
         <item name="android:windowBackground">@drawable/bg</item>
     </style>
 
+    <style name="roundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
+
     <style name="Theme.KidStoryApp" parent="Base.Theme.KidStoryApp" />
 </resources>
