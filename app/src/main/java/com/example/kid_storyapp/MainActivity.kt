@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
+        // دریافت لیست داستان‌ها از کلاس Constants
         val data = Constants.getStoryList()
         setAdapterRecyclerView(data)
 
@@ -27,6 +27,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * این تابع آداپتور مربوط به RecyclerView را تنظیم می‌کند و یک لیست از داستان‌ها به آن می‌دهد.
+     * همچنین، رویداد کلیک روی هر داستان را مدیریت می‌کند تا کاربر را به StoryActivity هدایت کند.
+     */
     private fun setAdapterRecyclerView(data:ArrayList<Story>)
     {
         val recyclerView = findViewById<RecyclerView>(R.id.rvStoryList)

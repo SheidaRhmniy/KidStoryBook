@@ -18,7 +18,7 @@ class SpalshActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }*/
-
+        // استفاده از Handler برای تاخیر ۳.۵ ثانیه‌ای و سپس انتقال به صفحه اصلی (MainActivity)
         Handler().postDelayed({
             startActivity(Intent(this,MainActivity::class.java))
             finish()
