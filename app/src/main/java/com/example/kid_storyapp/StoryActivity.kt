@@ -3,6 +3,7 @@ package com.example.kid_storyapp
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -34,6 +35,7 @@ class StoryActivity : AppCompatActivity() {
         // Set up the back button
         binding?.btnBack?.setOnClickListener {
             // Go back to the previous activity (MainActivity)
+            stopAndReleaseMediaPlayer()
             finish()  // Finish the current activity and go back
         }
 
@@ -99,52 +101,79 @@ class StoryActivity : AppCompatActivity() {
     private fun setStoryView() {
         try {
             val story = storyList[position]
-            // تلاش برای بارگذاری تصویر
-            binding?.storyImage?.setImageResource(story.images.getOrNull(imagePosition) ?: R.drawable.logo)
-            binding?.tvStoryTitle?.setText(story.title)
 
-            // تلاش برای بارگذاری فایل صوتی
-            val audioResId = story.audios.getOrNull(imagePosition) ?: R.raw.audio1 // فایل صوتی پیش‌فرض
-            mediaPlayer?.release() // آزاد کردن MediaPlayer قدیمی (اگر وجود دارد)
-            mediaPlayer = MediaPlayer.create(this, audioResId)
 
-            // بررسی موفقیت در بارگذاری فایل صوتی
-            if (mediaPlayer == null) {
-                throw Exception("MediaPlayer could not be initialized")
-            }
+            // اگر داستان در حالت به زودی باشد
+            if (story.isComingSoon) {
+                // نمایش تصویر "به زودی" و مخفی کردن دکمه‌ها
+                binding?.storyImage?.setImageResource(R.drawable.comingsoon)
 
-            // تنظیمات مربوط به SeekBar و زمان‌ها
-            val duration = mediaPlayer?.duration ?: 0
-            binding?.seekBar?.max = duration
-            updateTotalTimeText(duration)
 
-            // تنظیم دکمه Play/Pause
-            isPlaying = false
-            binding?.btnPlay?.setImageResource(R.drawable.play)
+                // مخفی کردن دکمه‌ها
+                binding?.btnNext?.visibility = View.GONE
+                binding?.btnPrevious?.visibility = View.GONE
+                binding?.btnPlay?.visibility = View.GONE
+                binding?.seekBar?.visibility = View.GONE
+                binding?.tvStoryTitle?.visibility = View.GONE
+                binding?.tvCurrentTime?.visibility = View.GONE
+                binding?.tvTotalTime?.visibility = View.GONE
 
-            // Listener برای اتمام پخش صدا
-            mediaPlayer?.setOnCompletionListener {
+            }else{
+                // تلاش برای بارگذاری تصویر
+                binding?.storyImage?.setImageResource(story.images.getOrNull(imagePosition) ?: R.drawable.comingsoon)
+                binding?.tvStoryTitle?.setText(story.title)
+
+                // تلاش برای بارگذاری فایل صوتی
+                val audioResId = story.audios.getOrNull(imagePosition) ?: R.raw.s1_0 // فایل صوتی پیش‌فرض
+                mediaPlayer?.release() // آزاد کردن MediaPlayer قدیمی (اگر وجود دارد)
+                mediaPlayer = MediaPlayer.create(this, audioResId)
+
+                // بررسی موفقیت در بارگذاری فایل صوتی
+                if (mediaPlayer == null) {
+                    throw Exception("MediaPlayer could not be initialized")
+                }
+
+                // تنظیمات مربوط به SeekBar و زمان‌ها
+                val duration = mediaPlayer?.duration ?: 0
+                binding?.seekBar?.max = duration
+                updateTotalTimeText(duration)
+
+                // تنظیم دکمه Play/Pause
                 isPlaying = false
                 binding?.btnPlay?.setImageResource(R.drawable.play)
-                binding?.seekBar?.progress = 0
-                updateCurrentTimeText(0)
-            }
 
-            // به‌روزرسانی SeekBar هر ۱ ثانیه
-            updateSeekBarRunnable = object : Runnable {
-                override fun run() {
-                    try {
-                        val currentPosition = mediaPlayer?.currentPosition ?: 0
-                        binding?.seekBar?.progress = currentPosition
-                        updateCurrentTimeText(currentPosition)
-                        handler.postDelayed(this, 1000)
-                    } catch (e: Exception) {
-                        Toast.makeText(this@StoryActivity, "خطا در به‌روزرسانی SeekBar", Toast.LENGTH_SHORT).show()
-                        e.printStackTrace()
+                // Listener برای اتمام پخش صدا
+                mediaPlayer?.setOnCompletionListener {
+                    if (imagePosition < storyList[position].images.size - 1) {
+                        // اعمال تأخیر ۳ ثانیه‌ای قبل از رفتن به صفحه بعد
+                        Handler().postDelayed({
+                            imagePosition++  // رفتن به صفحه بعد
+                            setStoryView()   // نمایش صفحه بعد و پخش صدای آن
+                            playAudio()      // به صورت خودکار صدای صفحه جدید را پخش کنید
+                        }, 2000) // 3000 میلی‌ثانیه (3 ثانیه)
+                    } else {
+                        Toast.makeText(this, "به پایان داستان رسیده‌اید!", Toast.LENGTH_SHORT).show()
+                        isPlaying = false
+                        binding?.btnPlay?.setImageResource(R.drawable.play)
                     }
                 }
+
+                // به‌روزرسانی SeekBar هر ۱ ثانیه
+                updateSeekBarRunnable = object : Runnable {
+                    override fun run() {
+                        try {
+                            val currentPosition = mediaPlayer?.currentPosition ?: 0
+                            binding?.seekBar?.progress = currentPosition
+                            updateCurrentTimeText(currentPosition)
+                            handler.postDelayed(this, 1000)
+                        } catch (e: Exception) {
+                            Toast.makeText(this@StoryActivity, "خطا در به‌روزرسانی SeekBar", Toast.LENGTH_SHORT).show()
+                            e.printStackTrace()
+                        }
+                    }
+                }
+                handler.post(updateSeekBarRunnable)
             }
-            handler.post(updateSeekBarRunnable)
 
         } catch (e: Exception) {
             Toast.makeText(this, "خطا در بارگذاری داستان یا منابع صوتی", Toast.LENGTH_LONG).show()
@@ -195,5 +224,45 @@ class StoryActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+
+    private fun stopAndReleaseMediaPlayer() {
+        mediaPlayer?.let {
+            if (it.isPlaying) {
+                it.stop()  // توقف پخش صدا
+            }
+            it.release()  // آزاد کردن منابع MediaPlayer
+            mediaPlayer = null  // جلوگیری از هرگونه عملیات دیگر با MediaPlayer
+            isPlaying = false  // به‌روزرسانی وضعیت
+            handler.removeCallbacksAndMessages(null)  // توقف تمامی Runnable‌ها و پیام‌ها
+        }
+    }
+
+    // توقف پخش خودکار (توقف تغییر تصاویر و صدا)
+    private fun stopAutoPlayback() {
+        handler.removeCallbacksAndMessages(null)  // توقف تمامی Callback‌های مربوط به پخش خودکار
+    }
+
+    override fun onDestroy() {
+        stopAndReleaseMediaPlayer()
+        super.onDestroy()
+
+    }
+
+    // Handle back button press using OnBackPressedDispatcher
+    override fun onBackPressed() {
+        stopAutoPlayback()
+        stopAndReleaseMediaPlayer()
+        super.onBackPressed()
+        finish()
+    }
+    // when clicked on home btn of phone
+    override fun onPause() {
+        mediaPlayer?.pause()  // توقف پخش صدا
+        isPlaying = false
+        binding?.btnPlay?.setImageResource(R.drawable.play)  // تغییر آیکون به Play
+        super.onPause()
+    }
+
+
 
 }

@@ -16,12 +16,14 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/itemListImage"
             android:layout_width="120dp"
             android:layout_height="120dp"
+            app:shapeAppearanceOverlay="@style/roundedImageView"
             android:layout_alignParentEnd="true"
-            tools:srcCompat="@drawable/logo" />
+            android:scaleType="fitXY"
+            tools:srcCompat="@drawable/s1_cv" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +42,7 @@
                 android:fontFamily="@font/lalezar"
                 android:textColor="@color/darkgreen"
                 android:textSize="22sp"
-                tools:text="قصه پیرمرد دانا" />
+                tools:text="@string/title1" />
 
             <TextView
                 android:id="@+id/tvCategory"
@@ -50,7 +52,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                tools:text="کودک و نوجوان" />
+                tools:text="@string/categoryTeen" />
 
             <TextView
                 android:id="@+id/tvDesc"
@@ -63,7 +65,7 @@
                 android:maxLength="50"
                 android:maxLines="1"
                 android:ellipsize="end"
-                tools:text=" داستان زندگی یه پیرمرد دانا و مهربون در یک مزرعه گندم که به تنهایی دارد زنگی میکند و دوستی ندارد." />
+                tools:text="@string/moral1"/>
         </LinearLayout>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

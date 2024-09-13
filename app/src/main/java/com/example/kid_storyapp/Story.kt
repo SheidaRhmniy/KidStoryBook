@@ -8,6 +8,6 @@ data class Story(
     val images: List<Int> ,// Store images as a list
     val audios: List<Int> , // Store images as a list
     val category: Int,
-    val moral: Int
-
+    val moral: Int,
+    val isComingSoon: Boolean = false
 )

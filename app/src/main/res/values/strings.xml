@@ -1,24 +1,19 @@
 <resources>
-    <string name="app_name">Kid-StoryApp</string>
+    <string name="app_name">پندآموز</string>
 
 
-    <string name="title1"> خرگوش کوچولو و ماجراجویی در جنگل</string>
-    <string name="title2">قورباغه‌ای که می‌خواست پرواز کند</string>
-    <string name="title3">پنگوئن شجاع و سفر به قطب شمال</string>
-    <string name="title4">گربه کنجکاو و گنج پنهان</string>
-    <string name="title5">زنبور کوچکی که از گل‌ها ترسید</string>
-    <string name="title6">لاک‌پشت مسابقه‌دو و خرگوش تندپا</string>
+    <string name="title1">حیله گرگ</string>
+    <string name="title2">دایناسور کوچک عصبی</string>
+    <string name="title3">کوچولوی خوردنی</string>
+    <string name="title4">جولیا میخواد کمک کنه</string>
 
     <string name="categoryToddler">خردسال</string>
-    <string name="categoryChildren">کودکِ</string>
+    <string name="categoryChildren">کودک</string>
     <string name="categoryTeen">نوجوان</string>
 
-    <string name="moral1">خرگوش کوچولو برای یافتن دوستان جدید به یک ماجراجویی در جنگل می‌رود و در راه یاد می‌گیرد که دوستی واقعی چیست.</string>
-    <string name="moral2">قورباغه‌ای کوچک که آرزو دارد پرواز کند، تلاش می‌کند راهی برای رسیدن به آسمان پیدا کند و در این مسیر با کمک دوستانش می‌آموزد که هرکسی ویژگی‌های خاص خودش را دارد.</string>
-    <string name="moral3">پنگوئن شجاع برای نجات خانواده‌اش از یک طوفان بزرگ، به قطب شمال سفر می‌کند و در این راه قدرت شجاعت و همبستگی را کشف می‌کند.</string>
-    <string name="moral4">گربه‌ای کنجکاو به دنبال گنج پنهانی در حیاط خانه‌اش می‌گردد و در نهایت متوجه می‌شود که بزرگترین گنج، دوستی و محبت خانواده‌اش است.</string>
-    <string name="moral5">یک زنبور کوچک که از گل‌ها می‌ترسد، یاد می‌گیرد که با شجاعت بر ترس‌هایش غلبه کند و نقش مهم خود را در طبیعت کشف کند.</string>
-    <string name="moral6">لاک‌پشت آرام و صبور در مسابقه‌ای با خرگوش تندپا شرکت می‌کند و به همه نشان می‌دهد که تلاش و پشتکار از سرعت مهم‌تر است.</string>
-
+    <string name="moral1">آخر گرگ را چه به پوستین دوزی!</string>
+    <string name="moral2">فرد,دایناسور کوچولو، حسابی عصبانی بود! چون هرکاری میکرد، نیمتونست بند کفشش رو ببنده!</string>
+    <string name="moral3">چه چیزایی رو میشه خورد؟</string>
+    <string name="moral4">دختر کوچولی قصه ما میخواد کمک کنه!</string>
 
 </resources>
